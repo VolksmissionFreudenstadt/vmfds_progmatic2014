@@ -1,5 +1,4 @@
 <?php
-
 $PLUGIN_CONF['vmfds_progmatic2014'] = array(
     'title' => 'ProgMatic2014 heating management',
     'description' => 'Create .dat files for ProgMatic2014 from room reservations',
@@ -9,5 +8,5 @@ $PLUGIN_CONF['vmfds_progmatic2014'] = array(
     'conflicts' => '',
     'state' => 'alpha',
     'version' => '0.1',
-    'type' => 'rota',
+    'type' => 'reservation',
 );
