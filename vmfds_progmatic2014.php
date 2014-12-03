@@ -74,14 +74,18 @@ function my_show_case_vmfds_progmatic2014_home()
             $profile->getRoomProfile($profileIdx)->setLockState($room['lock']);
 
             foreach ($program[$roomIdx] as $dayIdx => $dayProgram) {
+                $ctr = 0;
                 foreach ($dayProgram as $progIdx => $prog) {
-                    $profile->getRoomProfile($profileIdx)
-                        ->getProgram($dayIdx)
-                        ->getItem($progIdx)
-                        ->setDataManually(
-                            $prog['start']['minute'], $prog['start']['hour'],
-                            $prog['end']['minute'], $prog['end']['hour']
-                    );
+                    if ($ctr < 4) {
+                        $profile->getRoomProfile($profileIdx)
+                            ->getProgram($dayIdx)
+                            ->getItem($progIdx)
+                            ->setDataManually(
+                                $prog['start']['minute'],
+                                $prog['start']['hour'], $prog['end']['minute'],
+                                $prog['end']['hour']
+                        );
+                    }
                 }
             }
         }
