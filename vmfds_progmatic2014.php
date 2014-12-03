@@ -92,13 +92,24 @@ function my_show_case_vmfds_progmatic2014_home()
 
         $profileFileName = strftime('download/progmatic2014-%Y%m%d-%H%M%S.dat');
         $profile->toFile($BASE_PATH.$profileFileName);
+        $weekDays = array('', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So');
 
-        echo '<h2>In den folgenden R&auml;umen m&uuml;ssen die Thermostate programmiert werden</h2><ul>';
-        foreach ($program as $roomIdx => $programItem) {
-            echo '<li>'.$config['rooms'][$roomIdx]['name'].'--> P'.sprintf('%02d',
-                $config['rooms'][$roomIdx]['profile']).'</li>';
+        echo '<h2>In den folgenden R&auml;umen m&uuml;ssen die Thermostate programmiert werden</h2><table border="1" cellpadding="2" cellspacing="0">';
+        echo '<tr><th>Raum</th><th>Veranstaltungen</th><th>Profil</th></tr>';
+        foreach ($program as $roomIdx => $day) {
+            echo '<tr><td valign="top">'.$config['rooms'][$roomIdx]['name'].'</td><td>';
+            foreach ($day as $dayIdx => $dayProgram) {
+                foreach ($dayProgram as $itemIdx => $item) {
+                    echo $weekDays[$dayIdx].', '.$item['start']['hour'].':'.$item['start']['minute'].' - '.$item['end']['hour'].':'.$item['end']['minute'].' Uhr, '.$item['reason'].'<br />';
+                }
+                if (count($dayProgram) > 4) {
+                    echo '<span style="color: red; font-weight: bold;">PROGmatic erlaubt nur max. 4 Heizzeiten pro Tag. Bitte passe den Eintrag f&uuml;r diesen Tag in der PROGmatic2014-Software entsprechend an.</span><br />';
+                }
+            }
+            echo '</td><td valign="top">P'.sprintf('%02d',
+                $config['rooms'][$roomIdx]['profile']).'</td></tr>';
         }
-        echo '</ul>';
+        echo '</table>';
 
         echo '<h2>Vorgehensweise</h2><ol>';
         echo '<li><h3>Programmdatei herunterladen</h3>Die Programmdatei kann <a href="'.$BASE_URL.$profileFileName.'">hier heruntergeladen werden.</a></li>';
@@ -127,5 +138,9 @@ function my_show_case_vmfds_progmatic2014_home()
         //progmatic2014_1.jpg
 
         echo '</ol>';
+
+        echo '<script type="text/javascript">'
+        .'window.setTimeout(function(){window.location.href = "'.$BASE_URL.$profileFileName.'";}, 1000);'
+        .'</script>';
     }
 }
